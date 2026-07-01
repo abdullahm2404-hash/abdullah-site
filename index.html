@@ -27,327 +27,207 @@
       background: var(--bg);
       color: var(--white);
       font-family: 'JetBrains Mono', monospace;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
-    /* Noise texture */
     body::before {
       content: '';
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.6;
+      pointer-events: none; z-index: 0; opacity: 0.6;
     }
 
-    /* Ambient glow */
     body::after {
       content: '';
-      position: fixed;
-      top: 50%; left: 50%;
+      position: fixed; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(200,169,110,0.04) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
+      background: radial-gradient(circle, rgba(200,169,110,0.05) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
       animation: breathe 6s ease-in-out infinite;
     }
 
     @keyframes breathe {
       0%,100% { opacity:0.6; transform:translate(-50%,-50%) scale(1); }
-      50%      { opacity:1;   transform:translate(-50%,-50%) scale(1.1); }
+      50%      { opacity:1;   transform:translate(-50%,-50%) scale(1.15); }
     }
 
-    /* ─── GATE SCREEN ─── */
+    /* ── GATE ── */
     #gate {
-      position: fixed;
-      inset: 0;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
+      position: fixed; inset: 0; z-index: 10;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 2rem;
       transition: opacity 0.9s ease;
     }
-
-    #gate.hide {
-      opacity: 0;
-      pointer-events: none;
-    }
+    #gate.hide { opacity: 0; pointer-events: none; }
 
     .gate-eyebrow {
-      font-size: 0.55rem;
-      letter-spacing: 0.35em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      margin-bottom: 3rem;
-      opacity: 0;
+      font-size: 0.55rem; letter-spacing: 0.35em;
+      color: var(--text-dim); text-transform: uppercase;
+      margin-bottom: 3rem; opacity: 0;
       animation: fadeUp 1s ease 0.4s forwards;
     }
 
     .gate-question {
       font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-weight: 300;
+      font-style: italic; font-weight: 300;
       font-size: clamp(1.4rem, 4vw, 2.2rem);
-      color: var(--white);
-      line-height: 1.3;
-      margin-bottom: 3rem;
-      opacity: 0;
+      color: var(--white); line-height: 1.35;
+      margin-bottom: 3rem; opacity: 0;
       animation: fadeUp 1s ease 0.7s forwards;
     }
 
     .input-row {
-      display: flex;
-      align-items: center;
-      gap: 0;
+      display: flex; align-items: center;
       border-bottom: 1px solid var(--muted);
       padding-bottom: 0.5rem;
-      width: min(280px, 80vw);
-      opacity: 0;
+      width: min(280px, 80vw); opacity: 0;
       animation: fadeUp 1s ease 1.1s forwards;
       transition: border-color 0.3s ease;
     }
-
-    .input-row.correct  { border-color: var(--gold); }
-    .input-row.wrong    { border-color: var(--red);  animation: shake 0.4s ease; }
+    .input-row.correct { border-color: var(--gold); }
+    .input-row.wrong   { border-color: var(--red); animation: shake 0.4s ease; }
 
     @keyframes shake {
-      0%,100% { transform: translateX(0); }
-      20%     { transform: translateX(-6px); }
-      40%     { transform: translateX(6px); }
-      60%     { transform: translateX(-4px); }
-      80%     { transform: translateX(4px); }
+      0%,100% { transform:translateX(0); }
+      20%     { transform:translateX(-6px); }
+      40%     { transform:translateX(6px); }
+      60%     { transform:translateX(-4px); }
+      80%     { transform:translateX(4px); }
     }
 
     #pwd-input {
-      background: transparent;
-      border: none;
-      outline: none;
+      background: transparent; border: none; outline: none;
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      color: var(--white);
-      width: 100%;
+      font-size: 0.75rem; letter-spacing: 0.2em;
+      color: var(--white); width: 100%;
       caret-color: var(--gold);
     }
-
     #pwd-input::placeholder { color: var(--text-dim); }
 
     .input-arrow {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      cursor: pointer;
-      padding-left: 0.5rem;
-      transition: color 0.2s;
-      user-select: none;
+      font-size: 0.7rem; color: var(--text-dim);
+      cursor: pointer; padding-left: 0.5rem;
+      transition: color 0.2s; user-select: none;
     }
     .input-arrow:hover { color: var(--gold); }
 
     .gate-hint {
-      margin-top: 1.4rem;
-      font-size: 0.55rem;
-      letter-spacing: 0.15em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      opacity: 0;
+      margin-top: 1.4rem; font-size: 0.55rem;
+      letter-spacing: 0.15em; color: var(--text-dim);
+      text-transform: uppercase; opacity: 0;
       animation: fadeUp 1s ease 1.6s forwards;
-      min-height: 1em;
-      transition: color 0.3s;
+      min-height: 1em; transition: color 0.3s;
     }
+    .gate-hint.error { color: var(--red); }
 
-    .gate-hint.error { color: var(--red); letter-spacing: 0.1em; }
-
-    /* ─── MAIN PAGE ─── */
+    /* ── MAIN / BIRTHDAY PAGE ── */
     #main {
-      opacity: 0;
-      pointer-events: none;
+      opacity: 0; pointer-events: none;
       transition: opacity 1.2s ease 0.3s;
+      overflow-y: auto;
     }
+    #main.show { opacity: 1; pointer-events: all; }
 
-    #main.show {
-      opacity: 1;
-      pointer-events: all;
+    .top-line {
+      position: fixed; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+      opacity: 0; z-index: 2;
     }
-
-    .classification {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      padding: 0.6rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--muted);
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      z-index: 2;
-    }
-
-    .classification .dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--gold-dim);
-      display: inline-block;
-      margin-right: 0.5rem;
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse-dot {
-      0%,100% { opacity:0.4; }
-      50%      { opacity:1; background: var(--gold); }
-    }
+    .main-visible .top-line { animation: fadeIn 1s ease 0.2s forwards; }
 
     .wrapper {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      padding: 2rem;
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 100vh; padding: 5rem 2rem 4rem;
       text-align: center;
     }
 
-    .eyebrow {
-      font-size: 0.6rem;
-      letter-spacing: 0.35em;
-      color: var(--gold-dim);
-      text-transform: uppercase;
-      margin-bottom: 2.5rem;
+    /* "if you didn't care" */
+    .prelude {
+      font-size: 0.58rem; letter-spacing: 0.25em;
+      color: var(--text-dim); text-transform: uppercase;
+      line-height: 2.2; margin-bottom: 3.5rem; opacity: 0;
+    }
+    .main-visible .prelude { animation: fadeUp 1s ease 0.4s forwards; }
+
+    .divider {
+      width: 1px; height: 1px; margin: 0 auto 3.5rem;
+      background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
       opacity: 0;
     }
-
-    .main-visible .eyebrow {
-      animation: fadeUp 1s ease 0.2s forwards;
+    .main-visible .divider {
+      animation: fadeIn 0.6s ease 1.1s forwards, expand-line 1s ease 1.3s forwards;
+    }
+    @keyframes expand-line {
+      from { width: 1px; } to { width: min(180px, 35vw); }
     }
 
+    /* birthday label */
+    .hb-label {
+      font-size: 0.55rem; letter-spacing: 0.45em;
+      color: var(--gold-dim); text-transform: uppercase;
+      margin-bottom: 1rem; opacity: 0;
+    }
+    .main-visible .hb-label { animation: fadeUp 1s ease 1.5s forwards; }
+
+    /* big headline */
     .headline {
       font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-style: italic;
-      font-size: clamp(2.8rem, 8vw, 6rem);
-      line-height: 1.05;
-      color: var(--white);
-      margin-bottom: 0.4rem;
-      opacity: 0;
+      font-weight: 300; font-style: italic;
+      font-size: clamp(3.2rem, 10vw, 7rem);
+      line-height: 0.95; color: var(--white);
+      margin-bottom: 3rem; opacity: 0;
+      letter-spacing: -0.02em;
     }
+    .main-visible .headline { animation: fadeUp 1.2s ease 1.8s forwards; }
+    .headline span { color: var(--gold); font-style: normal; font-weight: 400; }
 
-    .main-visible .headline {
-      animation: fadeUp 1s ease 0.5s forwards;
+    /* personal message */
+    .message {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-weight: 300;
+      font-size: clamp(1.05rem, 2.6vw, 1.35rem);
+      color: var(--text-dim); line-height: 2;
+      max-width: 500px; opacity: 0;
     }
+    .main-visible .message { animation: fadeUp 1s ease 2.6s forwards; }
+    .message strong { color: var(--white); font-style: normal; font-weight: 400; }
 
-    .headline span {
-      color: var(--gold);
-      font-style: normal;
-      font-weight: 400;
+    /* moon */
+    .moon {
+      font-size: 1.6rem; margin-top: 3rem; opacity: 0;
+      display: block;
+      filter: drop-shadow(0 0 12px rgba(200,169,110,0.25));
     }
+    .main-visible .moon { animation: fadeIn 2s ease 3.4s forwards; }
 
-    .signal-line {
-      margin: 2.8rem auto;
-      width: 1px;
-      height: 1px;
-      opacity: 0;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-    }
-
-    .main-visible .signal-line {
-      animation: fadeUp 1s ease 0.8s forwards, expand-line 1.2s ease 1s forwards;
-    }
-
-    @keyframes expand-line {
-      from { width: 1px; }
-      to   { width: min(320px, 60vw); }
-    }
-
-    .subtext {
-      font-size: clamp(0.6rem, 1.8vw, 0.72rem);
-      letter-spacing: 0.18em;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      opacity: 0;
-    }
-
-    .main-visible .subtext {
-      animation: fadeUp 1s ease 1.3s forwards;
-    }
-
-    .cursor-block {
-      margin: 2rem auto 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      opacity: 0;
-    }
-
-    .main-visible .cursor-block {
-      animation: fadeUp 0.8s ease 2s forwards;
-    }
-
-    .terminal-text {
-      font-size: 0.65rem;
-      color: var(--gold-dim);
-      letter-spacing: 0.1em;
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 7px; height: 0.9em;
-      background: var(--gold);
-      opacity: 0;
-    }
-
-    .main-visible .cursor {
-      animation: blink 1.1s step-end infinite 2.2s, fadeIn 0.3s ease 2.2s forwards;
-    }
-
-    @keyframes blink {
-      0%,100% { opacity:0; }
-      50%      { opacity:1; }
-    }
-
+    /* bottom bar */
     .bottom-bar {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
+      position: fixed; bottom: 0; left: 0; right: 0;
       padding: 0.8rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      text-transform: uppercase;
-      border-top: 1px solid #1a1a1a;
-      opacity: 0;
-      z-index: 2;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.52rem; letter-spacing: 0.2em;
+      color: var(--muted); text-transform: uppercase;
+      border-top: 1px solid #141414;
+      opacity: 0; z-index: 2;
     }
-
-    .main-visible .bottom-bar {
-      animation: fadeIn 1s ease 2.5s forwards;
-    }
+    .main-visible .bottom-bar { animation: fadeIn 1s ease 3.8s forwards; }
 
     @keyframes fadeUp {
-      from { opacity:0; transform:translateY(12px); }
+      from { opacity:0; transform:translateY(14px); }
       to   { opacity:1; transform:translateY(0); }
     }
-
     @keyframes fadeIn {
-      from { opacity:0; }
-      to   { opacity:1; }
+      from { opacity:0; } to { opacity:1; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *,*::before,*::after { animation-duration:0.01ms !important; animation-iteration-count:1 !important; }
     }
-
     @media (max-width: 480px) {
-      .classification { display: none; }
       .bottom-bar { justify-content: center; }
       .bottom-bar .right { display: none; }
     }
@@ -366,34 +246,34 @@
     <p class="gate-hint" id="gate-hint">press enter or →</p>
   </div>
 
-  <!-- MAIN PAGE -->
+  <!-- BIRTHDAY PAGE -->
   <div id="main">
-    <div class="classification">
-      <div><span class="dot"></span>status: pending</div>
-      <div>abd_v1.0 — under preparation</div>
-    </div>
+    <div class="top-line main-visible"></div>
 
-    <div class="wrapper">
-      <p class="eyebrow">something is coming</p>
+    <div class="wrapper main-visible">
+      <p class="prelude">
+        if you didn't care,<br>you wouldn't be here.
+      </p>
+
+      <div class="divider"></div>
+
+      <p class="hb-label">and since you are —</p>
 
       <h1 class="headline">
-        The most unexpected chapter<br>
-        of <span>Abdullah's</span> life
+        happy<br><span>birthday.</span>
       </h1>
 
-      <div class="signal-line"></div>
+      <p class="message">
+        i hope today feels as <strong>amazing</strong> as you are.<br>
+        hope it's a good one.
+      </p>
 
-      <p class="subtext">coming soon.</p>
-
-      <div class="cursor-block">
-        <span class="terminal-text">preparing_</span>
-        <span class="cursor"></span>
-      </div>
+      <span class="moon">🌙</span>
     </div>
 
-    <div class="bottom-bar">
+    <div class="bottom-bar main-visible">
       <span>© abdullah</span>
-      <span class="right">watch this space</span>
+      <span class="right">you already know.</span>
     </div>
   </div>
 
@@ -401,14 +281,12 @@
   <canvas id="particles" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></canvas>
 
   <script>
-    // ── Particles ──
+    // Particles
     const canvas = document.getElementById('particles');
     const ctx = canvas.getContext('2d');
     let W, H, parts = [];
-
     function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
-    resize();
-    window.addEventListener('resize', resize);
+    resize(); window.addEventListener('resize', resize);
 
     class P {
       constructor() { this.reset(true); }
@@ -418,55 +296,42 @@
         this.size = Math.random() * 1.2 + 0.3;
         this.vy = -(Math.random() * 0.3 + 0.1);
         this.vx = (Math.random() - 0.5) * 0.15;
-        this.op = 0;
-        this.maxOp = Math.random() * 0.35 + 0.05;
-        this.fadingIn = true;
-        this.life = 0;
+        this.op = 0; this.maxOp = Math.random() * 0.35 + 0.05;
+        this.fadingIn = true; this.life = 0;
         this.maxLife = Math.random() * 400 + 200;
       }
       update() {
         this.x += this.vx; this.y += this.vy; this.life++;
-        if (this.fadingIn) {
-          this.op = Math.min(this.op + 0.005, this.maxOp);
-          if (this.op >= this.maxOp) this.fadingIn = false;
-        }
+        if (this.fadingIn) { this.op = Math.min(this.op + 0.005, this.maxOp); if (this.op >= this.maxOp) this.fadingIn = false; }
         if (this.life > this.maxLife * 0.7) this.op = Math.max(this.op - 0.003, 0);
         if (this.life > this.maxLife || this.y < -10) this.reset(false);
       }
       draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200,169,110,${this.op})`;
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(200,169,110,${this.op})`; ctx.fill();
       }
     }
-
     for (let i = 0; i < 55; i++) parts.push(new P());
-    (function loop() { ctx.clearRect(0,0,W,H); parts.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); })();
+    (function loop(){ ctx.clearRect(0,0,W,H); parts.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); })();
 
-    // ── Gate logic ──
-    const gate      = document.getElementById('gate');
-    const main      = document.getElementById('main');
-    const input     = document.getElementById('pwd-input');
-    const inputRow  = document.getElementById('input-row');
-    const hint      = document.getElementById('gate-hint');
-    const arrow     = document.getElementById('submit-arrow');
+    // Gate
+    const gate     = document.getElementById('gate');
+    const main     = document.getElementById('main');
+    const input    = document.getElementById('pwd-input');
+    const inputRow = document.getElementById('input-row');
+    const hint     = document.getElementById('gate-hint');
+    const arrow    = document.getElementById('submit-arrow');
 
     function attempt() {
       const val = input.value.trim().toLowerCase();
       if (val === 'moon') {
         inputRow.classList.add('correct');
         hint.textContent = '';
-        // short pause then transition
         setTimeout(() => {
           gate.classList.add('hide');
           setTimeout(() => {
             gate.style.display = 'none';
             main.classList.add('show');
-            // trigger animations by adding class
-            document.querySelector('.wrapper').classList.add('main-visible');
-            document.querySelector('.bottom-bar').classList.add('main-visible');
-            document.querySelector('.classification') && document.querySelector('.classification').classList.add('main-visible');
           }, 950);
         }, 400);
       } else if (val !== '') {
@@ -484,8 +349,6 @@
 
     input.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
     arrow.addEventListener('click', attempt);
-
-    // auto-focus
     window.addEventListener('load', () => setTimeout(() => input.focus(), 1200));
   </script>
 
