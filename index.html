@@ -17,7 +17,6 @@
       --gold: #c8a96e;
       --gold-dim: #7a6340;
       --white: #e8e4dc;
-      --muted: #555;
       --text-dim: #888;
       --red: #8b3a3a;
       --surface: #0f0f0f;
@@ -31,7 +30,6 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* noise */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -39,7 +37,6 @@
       pointer-events: none; z-index: 0; opacity: 0.5;
     }
 
-    /* ambient glow */
     body::after {
       content: '';
       position: fixed; top: 50%; left: 50%;
@@ -58,49 +55,15 @@
     .page {
       position: relative; z-index: 1;
       min-height: 100vh;
-      display: flex; flex-direction: column;
+      display: flex;
       align-items: center; justify-content: center;
-      padding: 4rem 2rem 5rem;
+      padding: 2rem;
     }
 
     .inner {
-      width: 100%; max-width: 560px;
-      display: flex; flex-direction: column;
-      align-items: flex-start; gap: 0;
-    }
-
-    /* message */
-    .letter {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic; font-weight: 300;
-      font-size: clamp(1.1rem, 2.8vw, 1.35rem);
-      color: #b0aca4;
-      line-height: 2.1;
-      width: 100%;
+      width: 100%; max-width: 520px;
       opacity: 0;
-      animation: fadeUp 1.2s ease 0.3s forwards;
-    }
-    .letter .w { color: var(--white); font-style: normal; }
-    .letter .g { color: var(--gold-dim); font-style: normal; }
-
-    /* divider */
-    .divider {
-      width: 100%; height: 1px; margin: 2.5rem 0;
-      background: linear-gradient(to right, var(--border), transparent);
-      opacity: 0;
-      animation: fadeIn 1s ease 1.2s forwards;
-    }
-
-    /* box section */
-    .box-section {
-      width: 100%; opacity: 0;
-      animation: fadeUp 1s ease 1.5s forwards;
-    }
-
-    .box-label {
-      font-size: 0.52rem; letter-spacing: 0.3em;
-      color: var(--text-dim); text-transform: uppercase;
-      margin-bottom: 1rem;
+      animation: fadeUp 1s ease 0.3s forwards;
     }
 
     textarea {
@@ -116,12 +79,12 @@
       padding: 1rem 1.2rem;
       resize: none;
       outline: none;
-      min-height: 120px;
+      min-height: 140px;
       transition: border-color 0.3s;
       caret-color: var(--gold);
     }
     textarea::placeholder { color: #444; font-style: italic; }
-    textarea:focus { border-color: #333; }
+    textarea:focus { border-color: #2e2e2e; }
 
     .send-btn {
       margin-top: 0.8rem;
@@ -149,46 +112,14 @@
     .send-status.ok  { color: var(--gold-dim); }
     .send-status.err { color: var(--red); }
 
-    /* moon */
-    .moon {
-      margin-top: 3rem; font-size: 1.2rem;
-      opacity: 0; align-self: flex-start;
-      filter: drop-shadow(0 0 8px rgba(200,169,110,0.15));
-      animation: fadeIn 2s ease 2.5s forwards;
-    }
-
-    /* bottom */
-    .bottom-bar {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      padding: 0.7rem 2rem;
-      display: flex; justify-content: space-between;
-      font-size: 0.5rem; letter-spacing: 0.2em;
-      color: #2a2a2a; text-transform: uppercase;
-      border-top: 1px solid #111;
-      background: rgba(8,8,8,0.95);
-      z-index: 2;
-      opacity: 0;
-      animation: fadeIn 1s ease 2.8s forwards;
-    }
-
     @keyframes fadeUp {
       from { opacity:0; transform:translateY(12px); }
       to   { opacity:1; transform:translateY(0); }
     }
-    @keyframes fadeIn {
-      from { opacity:0; } to { opacity:1; }
-    }
 
-    /* particles canvas */
     #particles {
       position: fixed; inset: 0;
       z-index: 0; pointer-events: none;
-    }
-
-    @media (max-width: 480px) {
-      .page { padding: 3rem 1.5rem 5rem; }
-      .bottom-bar { justify-content: center; }
-      .bottom-bar .r { display: none; }
     }
   </style>
 </head>
@@ -198,31 +129,10 @@
 
   <div class="page">
     <div class="inner">
-
-      <p class="letter">
-        hope you have a happy life with him. you guys are made for each other (in a good way).<br><br>
-        but in case you ever need me —<br>
-        <span class="w">this might stay for a month or so.</span><br>
-        then it's gone. this website will get deleted automatically.<br><br>
-        so in case you ever need a safe space —
-      </p>
-
-      <div class="divider"></div>
-
-      <div class="box-section">
-        <textarea id="msg-box" rows="5" placeholder="probably won't reach him."></textarea>
-        <button class="send-btn" id="send-btn">send →</button>
-        <p class="send-status" id="send-status"></p>
-      </div>
-
-      <span class="moon">🌙</span>
-
+      <textarea id="msg-box" rows="5" placeholder="Feeling stupid. Might deleted by next week lol."></textarea>
+      <button class="send-btn" id="send-btn">send →</button>
+      <p class="send-status" id="send-status"></p>
     </div>
-  </div>
-
-  <div class="bottom-bar">
-    <span>© abdullah</span>
-    <span class="r">for now.</span>
   </div>
 
   <script>
@@ -281,10 +191,7 @@
         const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: CHAT_ID,
-            text: `🌙 new message:\n\n"${text}"`,
-          })
+          body: JSON.stringify({ chat_id: CHAT_ID, text: `🌙 new message:\n\n"${text}"` })
         });
         const data = await res.json();
         if (data.ok) {
