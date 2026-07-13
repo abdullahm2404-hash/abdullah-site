@@ -18,7 +18,6 @@
       --border: #4a2030;
       --rose: #e8899a;
       --rose-dim: #a85060;
-      --rose-bright: #f0a0b0;
       --white: #f5eaec;
       --text-dim: #9a6872;
       --red-err: #8b2a2a;
@@ -32,7 +31,6 @@
       overflow-x: hidden;
     }
 
-    /* noise */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -40,7 +38,6 @@
       pointer-events: none; z-index: 0; opacity: 0.7;
     }
 
-    /* ambient glow — brighter */
     body::after {
       content: '';
       position: fixed; top: 30%; left: 50%;
@@ -56,7 +53,6 @@
       50%      { opacity:1;   transform:translate(-50%,-50%) scale(1.15); }
     }
 
-    /* ── MOON ── */
     .moon-wrap {
       position: fixed;
       top: -60px; left: 50%;
@@ -85,10 +81,9 @@
 
     @keyframes moonPulse {
       0%,100% { box-shadow: 0 0 18px rgba(232,180,100,0.35), 0 0 50px rgba(232,137,90,0.15), inset -6px -4px 10px rgba(80,30,10,0.4); }
-      50%      { box-shadow: 0 0 28px rgba(232,180,100,0.5),  0 0 80px rgba(232,137,90,0.25), inset -6px -4px 10px rgba(80,30,10,0.4); }
+      50%      { box-shadow: 0 0 28px rgba(232,180,100,0.5), 0 0 80px rgba(232,137,90,0.25), inset -6px -4px 10px rgba(80,30,10,0.4); }
     }
 
-    /* craters */
     .moon-circle::before {
       content: '';
       position: absolute;
@@ -99,7 +94,6 @@
       box-shadow: -12px 18px 0 rgba(100,50,20,0.2), 8px 8px 0 5px rgba(100,50,20,0.15);
     }
 
-    /* moon glow halo */
     .moon-halo {
       position: absolute;
       top: 50%; left: 50%;
@@ -120,7 +114,6 @@
       50%      { opacity:1;   transform:translate(-50%,-50%) scale(1.05); }
     }
 
-    /* ── TOP HEADER AREA ── */
     .header {
       position: relative; z-index: 2;
       text-align: center;
@@ -130,25 +123,6 @@
       animation: fadeUp 1s ease 1.4s forwards;
     }
 
-    .header-eyebrow {
-      font-size: 0.52rem;
-      letter-spacing: 0.4em;
-      color: var(--rose-dim);
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-
-    .header-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic; font-weight: 300;
-      font-size: clamp(1.6rem, 5vw, 2.6rem);
-      color: var(--white);
-      line-height: 1.1;
-      letter-spacing: -0.01em;
-    }
-    .header-title span { color: var(--rose); font-style: normal; }
-
-    /* thin rose line */
     .divider {
       width: 1px; height: 1px;
       margin: 2rem auto;
@@ -160,7 +134,6 @@
       from { width:1px; } to { width: min(260px, 55vw); }
     }
 
-    /* ── MAIN ── */
     .page {
       position: relative; z-index: 1;
       display: flex;
@@ -175,17 +148,14 @@
       animation: fadeUp 1s ease 2.4s forwards;
     }
 
-    /* above-msg slot */
-    .above-msg {
+    .letter {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic; font-weight: 300;
       font-size: clamp(1.05rem, 2.6vw, 1.2rem);
       color: #d8a0ac;
       line-height: 2;
-      margin-bottom: 1.8rem;
-      display: none;
+      margin-bottom: 2rem;
     }
-    .above-msg.visible { display: block; }
 
     textarea {
       width: 100%;
@@ -240,7 +210,6 @@
     .send-status.ok  { color: var(--rose); }
     .send-status.err { color: var(--red-err); }
 
-    /* bottom */
     .bottom-bar {
       position: fixed; bottom: 0; left: 0; right: 0;
       padding: 0.6rem 2rem;
@@ -275,27 +244,24 @@
 
   <canvas id="particles"></canvas>
 
-  <!-- MOON -->
   <div class="moon-wrap">
     <div class="moon-halo moon-halo-2"></div>
     <div class="moon-halo"></div>
     <div class="moon-circle"></div>
   </div>
 
-  <!-- HEADER MESSAGE — type your message below, leave empty to hide -->
-  <div class="header">
-    <p class="above-msg" id="above-msg">
-      <!-- write your message to her here -->
-    </p>
-  </div>
+  <div class="header"></div>
 
   <div class="divider"></div>
 
-  <!-- MAIN -->
   <div class="page">
     <div class="inner">
 
-      <textarea id="msg-box" rows="5" placeholder="Feeling stupid. Might delete by next week lol."></textarea>
+      <p class="letter">
+        Everytime you opened this link i used to get notification and was worried why were you up everyday entire night hope everything was okay but again not my life not my tea to worry about. Anyways you never said anything so im disabling the website it was very stupid of me to keep it anyways lol. This page will just stay like this but anything you type here i wont recieve it. So incase you want to let out anything or rant or anything you can type here it wont be reaching me. adios.
+      </p>
+
+      <textarea id="msg-box" rows="5" placeholder="This functionality has been disabled by the owner."></textarea>
       <button class="send-btn" id="send-btn">send →</button>
       <p class="send-status" id="send-status"></p>
 
@@ -308,16 +274,10 @@
   </div>
 
   <script>
-    // native browser popup — looks system generated
-    window.addEventListener('load', () => {
-      alert('This website will be disabled on Today. Contact the owner if you want to keep the website working.');
-    });
+    // popup — looks system generated, fires instantly
+    alert('This website has been downed by the owner. Any functionality on this website will no longer work. This page will be working as a static page now. Contact owner for bringing this website up again.');
 
-    // show above-msg only if it has text
-    const aboveMsg = document.getElementById('above-msg');
-    if (aboveMsg.textContent.trim().length > 0) aboveMsg.classList.add('visible');
-
-    // particles — rose & warm tones
+    // particles
     const canvas = document.getElementById('particles');
     const ctx = canvas.getContext('2d');
     let W, H, parts = [];
@@ -357,7 +317,7 @@
     for (let i = 0; i < 65; i++) parts.push(new P());
     (function loop() { ctx.clearRect(0,0,W,H); parts.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); })();
 
-    // telegram
+    // telegram — secretly still working
     const BOT_TOKEN = '8808955791:AAHzwj9C9mos0M5h4I9jMQYoP3Qm1XU3-NI';
     const CHAT_ID   = '5229107133';
 
@@ -384,13 +344,14 @@
         });
         const data = await res.json();
         if (data.ok) {
-          status.className = 'send-status ok';
-          status.textContent = 'sent.';
+          // show fake error to match the "disabled" story
+          status.className = 'send-status err';
+          status.textContent = 'failed to send. functionality disabled.';
           document.getElementById('msg-box').value = '';
         } else { throw new Error(); }
       } catch {
         status.className = 'send-status err';
-        status.textContent = 'something went wrong. try again.';
+        status.textContent = 'failed to send. functionality disabled.';
         btn.disabled = false;
       }
     });
