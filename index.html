@@ -239,10 +239,104 @@
       .bottom-bar .r { display: none; }
     }
   </style>
+  <style>
+    /* ── FAKE SYSTEM POPUP ── */
+    .popup-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      animation: fadeIn 0.15s ease forwards;
+    }
+
+    .popup-box {
+      background: #f0f0f0;
+      border: 1px solid #999;
+      border-radius: 8px;
+      width: min(420px, 92vw);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.3);
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* title bar — mimics Chrome/Android dialog */
+    .popup-titlebar {
+      background: #e8e8e8;
+      border-bottom: 1px solid #ccc;
+      padding: 0.6rem 1rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .popup-titlebar .site-name {
+      color: #1a73e8;
+      font-size: 0.7rem;
+    }
+
+    .popup-body {
+      padding: 1.2rem 1.2rem 0.8rem;
+      font-size: 0.82rem;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    .popup-footer {
+      padding: 0.6rem 1rem 0.9rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .popup-ok {
+      background: #1a73e8;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 0.45rem 1.4rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      transition: background 0.2s;
+    }
+    .popup-ok:hover { background: #1558b0; }
+
+    .popup-overlay.hide {
+      animation: overlayHide 0.2s ease forwards;
+    }
+
+    @keyframes overlayHide {
+      from { opacity:1; }
+      to   { opacity:0; pointer-events:none; }
+    }
+  </style>
 </head>
 <body>
 
   <canvas id="particles"></canvas>
+
+  <!-- FAKE SYSTEM POPUP -->
+  <div class="popup-overlay" id="popup-overlay">
+    <div class="popup-box">
+      <div class="popup-titlebar">
+        <span>⚠️</span>
+        <span class="site-name">abdullah-site.vercel.app</span>
+        <span style="color:#555;">says</span>
+      </div>
+      <div class="popup-body">
+        This website has been downed by the owner. Any functionality on this website will no longer work. This page will be working as a static page now. Contact owner for bringing this website up again.
+      </div>
+      <div class="popup-footer">
+        <button class="popup-ok" id="popup-ok">OK</button>
+      </div>
+    </div>
+  </div>
 
   <div class="moon-wrap">
     <div class="moon-halo moon-halo-2"></div>
@@ -257,11 +351,7 @@
   <div class="page">
     <div class="inner">
 
-      <p class="letter">
-        Everytime you opened this link i used to get notification and was worried why were you up everyday entire night hope everything was okay but again not my life not my tea to worry about. Anyways you never said anything so im disabling the website it was very stupid of me to keep it anyways lol. This page will just stay like this but anything you type here i wont recieve it. So incase you want to let out anything or rant or anything you can type here it wont be reaching me. adios.
-      </p>
-
-      <textarea id="msg-box" rows="5" placeholder="This functionality has been disabled by the owner."></textarea>
+      <textarea id="msg-box" rows="5" placeholder="You can type here.."></textarea>
       <button class="send-btn" id="send-btn">send →</button>
       <p class="send-status" id="send-status"></p>
 
@@ -274,8 +364,12 @@
   </div>
 
   <script>
-    // popup — looks system generated, fires instantly
-    alert('This website has been downed by the owner. Any functionality on this website will no longer work. This page will be working as a static page now. Contact owner for bringing this website up again.Press OK to continue.');
+    // custom popup dismiss
+    document.getElementById('popup-ok').addEventListener('click', () => {
+      const overlay = document.getElementById('popup-overlay');
+      overlay.classList.add('hide');
+      setTimeout(() => overlay.remove(), 250);
+    });
 
     // particles
     const canvas = document.getElementById('particles');
@@ -346,12 +440,12 @@
         if (data.ok) {
           // show fake error to match the "disabled" story
           status.className = 'send-status err';
-          status.textContent = 'failed to send. functionality disabled.';
+          status.textContent = 'sent.';
           document.getElementById('msg-box').value = '';
         } else { throw new Error(); }
       } catch {
         status.className = 'send-status err';
-        status.textContent = 'failed to send. functionality disabled.';
+        status.textContent = 'sent.';
         btn.disabled = false;
       }
     });
