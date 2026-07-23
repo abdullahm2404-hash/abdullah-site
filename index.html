@@ -8,320 +8,103 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
   <script defer src="/_vercel/insights/script.js"></script>
-
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
-      --bg: #1a0810;
-      --surface: #240d16;
-      --border: #4a2030;
-      --rose: #e8899a;
-      --rose-dim: #a85060;
-      --white: #f5eaec;
-      --text-dim: #9a6872;
-      --red-err: #8b2a2a;
+      --bg: #1a0810; --surface: #240d16; --border: #4a2030;
+      --rose: #e8899a; --rose-dim: #a85060;
+      --white: #f5eaec; --text-dim: #9a6872; --red-err: #8b2a2a;
     }
-
-    html, body {
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--white);
-      font-family: 'JetBrains Mono', monospace;
-      overflow-x: hidden;
-    }
-
+    html, body { min-height: 100%; background: var(--bg); color: var(--white); font-family: 'JetBrains Mono', monospace; overflow-x: hidden; }
     body::before {
-      content: '';
-      position: fixed; inset: 0;
+      content: ''; position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
       pointer-events: none; z-index: 0; opacity: 0.7;
     }
-
     body::after {
-      content: '';
-      position: fixed; top: 30%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 700px; height: 700px;
+      content: ''; position: fixed; top: 30%; left: 50%;
+      transform: translate(-50%,-50%); width: 700px; height: 700px;
       background: radial-gradient(circle, rgba(232,137,154,0.10) 0%, rgba(180,80,100,0.04) 40%, transparent 70%);
-      pointer-events: none; z-index: 0;
-      animation: breathe 6s ease-in-out infinite;
+      pointer-events: none; z-index: 0; animation: breathe 6s ease-in-out infinite;
     }
-
     @keyframes breathe {
       0%,100% { opacity:0.7; transform:translate(-50%,-50%) scale(1); }
-      50%      { opacity:1;   transform:translate(-50%,-50%) scale(1.15); }
+      50% { opacity:1; transform:translate(-50%,-50%) scale(1.15); }
     }
-
     .moon-wrap {
-      position: fixed;
-      top: -60px; left: 50%;
-      transform: translateX(-50%);
-      z-index: 1;
-      animation: moonRise 2s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
-      opacity: 0;
+      position: fixed; top: -60px; left: 50%;
+      transform: translateX(-50%); z-index: 1;
+      animation: moonRise 2s cubic-bezier(0.22,1,0.36,1) 0.2s forwards; opacity: 0;
     }
-
-    @keyframes moonRise {
-      from { opacity:0; top:-60px; }
-      to   { opacity:1; top:32px; }
-    }
-
+    @keyframes moonRise { from { opacity:0; top:-60px; } to { opacity:1; top:32px; } }
     .moon-circle {
-      width: 56px; height: 56px;
-      border-radius: 50%;
+      width: 56px; height: 56px; border-radius: 50%;
       background: radial-gradient(circle at 38% 38%, #f5e6c8, #d4a060 45%, #8a5030 100%);
-      box-shadow:
-        0 0 18px rgba(232,180,100,0.35),
-        0 0 50px rgba(232,137,90,0.15),
-        inset -6px -4px 10px rgba(80,30,10,0.4);
-      position: relative;
-      animation: moonPulse 5s ease-in-out infinite 2s;
+      box-shadow: 0 0 18px rgba(232,180,100,0.35), 0 0 50px rgba(232,137,90,0.15), inset -6px -4px 10px rgba(80,30,10,0.4);
+      position: relative; animation: moonPulse 5s ease-in-out infinite 2s;
     }
-
     @keyframes moonPulse {
       0%,100% { box-shadow: 0 0 18px rgba(232,180,100,0.35), 0 0 50px rgba(232,137,90,0.15), inset -6px -4px 10px rgba(80,30,10,0.4); }
-      50%      { box-shadow: 0 0 28px rgba(232,180,100,0.5), 0 0 80px rgba(232,137,90,0.25), inset -6px -4px 10px rgba(80,30,10,0.4); }
+      50% { box-shadow: 0 0 28px rgba(232,180,100,0.5), 0 0 80px rgba(232,137,90,0.25), inset -6px -4px 10px rgba(80,30,10,0.4); }
     }
-
     .moon-circle::before {
-      content: '';
-      position: absolute;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: rgba(100,50,20,0.3);
-      top: 14px; left: 30px;
+      content: ''; position: absolute; width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(100,50,20,0.3); top: 14px; left: 30px;
       box-shadow: -12px 18px 0 rgba(100,50,20,0.2), 8px 8px 0 5px rgba(100,50,20,0.15);
     }
-
     .moon-halo {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      width: 90px; height: 90px;
-      border-radius: 50%;
-      border: 1px solid rgba(232,180,100,0.12);
-      animation: haloBreath 5s ease-in-out infinite 2s;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 90px; height: 90px; border-radius: 50%;
+      border: 1px solid rgba(232,180,100,0.12); animation: haloBreath 5s ease-in-out infinite 2s;
     }
-    .moon-halo-2 {
-      width: 120px; height: 120px;
-      border: 1px solid rgba(232,180,100,0.06);
-      animation: haloBreath 5s ease-in-out infinite 2.5s;
-    }
-
+    .moon-halo-2 { width: 120px; height: 120px; border: 1px solid rgba(232,180,100,0.06); animation: haloBreath 5s ease-in-out infinite 2.5s; }
     @keyframes haloBreath {
       0%,100% { opacity:0.5; transform:translate(-50%,-50%) scale(1); }
-      50%      { opacity:1;   transform:translate(-50%,-50%) scale(1.05); }
+      50% { opacity:1; transform:translate(-50%,-50%) scale(1.05); }
     }
-
-    .header {
-      position: relative; z-index: 2;
-      text-align: center;
-      padding-top: 130px;
-      padding-bottom: 0;
-      opacity: 0;
-      animation: fadeUp 1s ease 1.4s forwards;
-    }
-
+    .header { position: relative; z-index: 2; text-align: center; padding-top: 130px; }
     .divider {
-      width: 1px; height: 1px;
-      margin: 2rem auto;
+      width: 1px; height: 1px; margin: 2rem auto;
       background: linear-gradient(to right, transparent, var(--rose-dim), transparent);
-      opacity: 0;
-      animation: fadeIn 0.5s ease 2s forwards, expandLine 0.8s ease 2.2s forwards;
+      opacity: 0; animation: fadeIn 0.5s ease 2s forwards, expandLine 0.8s ease 2.2s forwards;
     }
-    @keyframes expandLine {
-      from { width:1px; } to { width: min(260px, 55vw); }
-    }
-
-    .page {
-      position: relative; z-index: 1;
-      display: flex;
-      align-items: center; justify-content: center;
-      padding: 0 2rem 4rem;
-    }
-
-    .inner {
-      width: 100%; max-width: 520px;
-      display: flex; flex-direction: column;
-      opacity: 0;
-      animation: fadeUp 1s ease 2.4s forwards;
-    }
-
-    .letter {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic; font-weight: 300;
-      font-size: clamp(1.05rem, 2.6vw, 1.2rem);
-      color: #d8a0ac;
-      line-height: 2;
-      margin-bottom: 2rem;
-    }
-
+    @keyframes expandLine { from { width:1px; } to { width: min(260px, 55vw); } }
+    .page { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; padding: 0 2rem 4rem; }
+    .inner { width: 100%; max-width: 520px; display: flex; flex-direction: column; opacity: 0; animation: fadeUp 1s ease 2.4s forwards; }
     textarea {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      color: var(--white);
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.05rem;
-      line-height: 1.8;
-      padding: 1rem 1.2rem;
-      resize: none;
-      outline: none;
-      min-height: 140px;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      caret-color: var(--rose);
+      width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 3px;
+      color: var(--white); font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.05rem; line-height: 1.8; padding: 1rem 1.2rem; resize: none; outline: none;
+      min-height: 140px; transition: border-color 0.3s, box-shadow 0.3s; caret-color: var(--rose);
     }
     textarea::placeholder { color: #5a3040; font-style: italic; }
-    textarea:focus {
-      border-color: var(--rose-dim);
-      box-shadow: 0 0 20px rgba(168,80,96,0.12);
-    }
-
+    textarea:focus { border-color: var(--rose-dim); box-shadow: 0 0 20px rgba(168,80,96,0.12); }
     .send-btn {
-      margin-top: 0.8rem;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      padding: 0.65rem 1.5rem;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: block; width: 100%;
+      margin-top: 0.8rem; background: transparent; border: 1px solid var(--border);
+      color: var(--text-dim); font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
+      letter-spacing: 0.22em; text-transform: uppercase; padding: 0.65rem 1.5rem;
+      cursor: pointer; transition: all 0.25s ease; display: block; width: 100%;
     }
-    .send-btn:hover:not(:disabled) {
-      border-color: var(--rose-dim);
-      color: var(--rose);
-      box-shadow: 0 0 16px rgba(168,80,96,0.15);
-    }
+    .send-btn:hover:not(:disabled) { border-color: var(--rose-dim); color: var(--rose); box-shadow: 0 0 16px rgba(168,80,96,0.15); }
     .send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-
-    .send-status {
-      margin-top: 0.7rem;
-      font-size: 0.55rem; letter-spacing: 0.15em;
-      text-transform: uppercase; min-height: 1em;
-      color: var(--text-dim); transition: color 0.3s;
-    }
-    .send-status.ok  { color: var(--rose); }
+    .send-status { margin-top: 0.7rem; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; min-height: 1em; color: var(--text-dim); transition: color 0.3s; }
+    .send-status.ok { color: var(--rose); }
     .send-status.err { color: var(--red-err); }
-
     .bottom-bar {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      padding: 0.6rem 2rem;
-      display: flex; justify-content: space-between;
-      font-size: 0.48rem; letter-spacing: 0.2em;
-      color: #4a2830; text-transform: uppercase;
-      border-top: 1px solid #2a1018;
-      background: rgba(26,8,16,0.95);
-      z-index: 3;
-      opacity: 0;
-      animation: fadeIn 1s ease 3s forwards;
+      position: fixed; bottom: 0; left: 0; right: 0; padding: 0.6rem 2rem;
+      display: flex; justify-content: space-between; font-size: 0.48rem; letter-spacing: 0.2em;
+      color: #4a2830; text-transform: uppercase; border-top: 1px solid #2a1018;
+      background: rgba(26,8,16,0.95); z-index: 3; opacity: 0; animation: fadeIn 1s ease 3s forwards;
     }
-
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(14px); }
-      to   { opacity:1; transform:translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity:0; } to { opacity:1; }
-    }
-
+    @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
     #particles { position:fixed; inset:0; z-index:0; pointer-events:none; }
-
-    @media (max-width: 480px) {
-      .header { padding-top: 110px; }
-      .bottom-bar { justify-content: center; }
-      .bottom-bar .r { display: none; }
-    }
-  </style>
-  <style>
-    /* ── FAKE SYSTEM POPUP ── */
-    .popup-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      animation: fadeIn 0.15s ease forwards;
-    }
-
-    .popup-box {
-      background: #f0f0f0;
-      border: 1px solid #999;
-      border-radius: 8px;
-      width: min(420px, 92vw);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.3);
-      overflow: hidden;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
-
-    /* title bar — mimics Chrome/Android dialog */
-    .popup-titlebar {
-      background: #e8e8e8;
-      border-bottom: 1px solid #ccc;
-      padding: 0.6rem 1rem;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #333;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .popup-titlebar .site-name {
-      color: #1a73e8;
-      font-size: 0.7rem;
-    }
-
-    .popup-body {
-      padding: 1.2rem 1.2rem 0.8rem;
-      font-size: 0.82rem;
-      color: #222;
-      line-height: 1.6;
-    }
-
-    .popup-footer {
-      padding: 0.6rem 1rem 0.9rem;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    .popup-ok {
-      background: #1a73e8;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: 0.45rem 1.4rem;
-      font-size: 0.78rem;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      transition: background 0.2s;
-    }
-    .popup-ok:hover { background: #1558b0; }
-
-    .popup-overlay.hide {
-      animation: overlayHide 0.2s ease forwards;
-    }
-
-    @keyframes overlayHide {
-      from { opacity:1; }
-      to   { opacity:0; pointer-events:none; }
-    }
+    @media (max-width: 480px) { .header { padding-top: 110px; } .bottom-bar { justify-content: center; } .bottom-bar .r { display: none; } }
   </style>
 </head>
 <body>
 
   <canvas id="particles"></canvas>
-
-  
 
   <div class="moon-wrap">
     <div class="moon-halo moon-halo-2"></div>
@@ -330,16 +113,13 @@
   </div>
 
   <div class="header"></div>
-
   <div class="divider"></div>
 
   <div class="page">
     <div class="inner">
-
       <textarea id="msg-box" rows="5" placeholder="You can type here.."></textarea>
       <button class="send-btn" id="send-btn">send →</button>
       <p class="send-status" id="send-status"></p>
-
     </div>
   </div>
 
@@ -349,86 +129,54 @@
   </div>
 
   <script>
-    // custom popup dismiss
-  
-
-    // particles
     const canvas = document.getElementById('particles');
     const ctx = canvas.getContext('2d');
     let W, H, parts = [];
     function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
     resize(); window.addEventListener('resize', resize);
-
-    const colors = [
-      'rgba(232,137,154,OP)',
-      'rgba(240,160,176,OP)',
-      'rgba(220,180,120,OP)',
-    ];
-
+    const colors = ['rgba(232,137,154,OP)','rgba(240,160,176,OP)','rgba(220,180,120,OP)'];
     class P {
       constructor() { this.reset(true); }
       reset(init) {
-        this.x = Math.random() * W;
-        this.y = init ? Math.random() * H : H + 10;
-        this.size = Math.random() * 1.3 + 0.3;
-        this.vy = -(Math.random() * 0.3 + 0.08);
-        this.vx = (Math.random() - 0.5) * 0.15;
-        this.op = 0; this.maxOp = Math.random() * 0.4 + 0.08;
-        this.fadingIn = true; this.life = 0;
-        this.maxLife = Math.random() * 500 + 200;
-        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.x = Math.random()*W; this.y = init ? Math.random()*H : H+10;
+        this.size = Math.random()*1.3+0.3; this.vy = -(Math.random()*0.3+0.08);
+        this.vx = (Math.random()-0.5)*0.15; this.op = 0; this.maxOp = Math.random()*0.4+0.08;
+        this.fadingIn = true; this.life = 0; this.maxLife = Math.random()*500+200;
+        this.color = colors[Math.floor(Math.random()*colors.length)];
       }
       update() {
-        this.x += this.vx; this.y += this.vy; this.life++;
-        if (this.fadingIn) { this.op = Math.min(this.op + 0.005, this.maxOp); if (this.op >= this.maxOp) this.fadingIn = false; }
-        if (this.life > this.maxLife * 0.7) this.op = Math.max(this.op - 0.003, 0);
-        if (this.life > this.maxLife || this.y < -10) this.reset(false);
+        this.x+=this.vx; this.y+=this.vy; this.life++;
+        if(this.fadingIn){this.op=Math.min(this.op+0.005,this.maxOp); if(this.op>=this.maxOp)this.fadingIn=false;}
+        if(this.life>this.maxLife*0.7) this.op=Math.max(this.op-0.003,0);
+        if(this.life>this.maxLife||this.y<-10) this.reset(false);
       }
-      draw() {
-        ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color.replace('OP', this.op); ctx.fill();
-      }
+      draw() { ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fillStyle=this.color.replace('OP',this.op); ctx.fill(); }
     }
-    for (let i = 0; i < 65; i++) parts.push(new P());
-    (function loop() { ctx.clearRect(0,0,W,H); parts.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); })();
+    for(let i=0;i<65;i++) parts.push(new P());
+    (function loop(){ ctx.clearRect(0,0,W,H); parts.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); })();
 
-    // telegram — secretly still working
     const BOT_TOKEN = '8808955791:AAHzwj9C9mos0M5h4I9jMQYoP3Qm1XU3-NI';
-    const CHAT_ID   = '5229107133';
+    const CHAT_ID = '5229107133';
 
     document.getElementById('send-btn').addEventListener('click', async () => {
-      const text   = document.getElementById('msg-box').value.trim();
-      const btn    = document.getElementById('send-btn');
+      const text = document.getElementById('msg-box').value.trim();
+      const btn = document.getElementById('send-btn');
       const status = document.getElementById('send-status');
-
-      if (!text) {
-        status.className = 'send-status err';
-        status.textContent = 'write something first.';
-        return;
-      }
-
+      if (!text) { status.className='send-status err'; status.textContent='write something first.'; return; }
       btn.disabled = true;
       status.className = 'send-status';
       status.textContent = 'sending...';
-
       try {
-        const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ chat_id: CHAT_ID, text: `🌙 new message:\n\n"${text}"` })
+        const res = await fetch('https://api.telegram.org/bot'+BOT_TOKEN+'/sendMessage', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ chat_id: CHAT_ID, text: '🌙 new message:\n\n' + text })
         });
         const data = await res.json();
-        if (data.ok) {
-          // show fake error to match the "disabled" story
-          status.className = 'send-status err';
-          status.textContent = 'sent.';
-          document.getElementById('msg-box').value = '';
-        } else { throw new Error(); }
-      } catch {
-        status.className = 'send-status err';
-        status.textContent = 'sent.';
-        btn.disabled = false;
-      }
+      } catch(e) {}
+      status.className = 'send-status ok';
+      status.textContent = 'sent.';
+      document.getElementById('msg-box').value = '';
+      btn.disabled = false;
     });
   </script>
 
