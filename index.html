@@ -117,6 +117,22 @@
 
   <div class="page">
     <div class="inner">
+      <!--
+        YOUR MESSAGE HERE
+        Type between the <p> tags to show something above the box.
+        Leave it empty and nothing will appear.
+      -->
+      <p id="above-msg" style="
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-weight: 300;
+        font-size: clamp(1.05rem, 2.6vw, 1.2rem);
+        color: #d8a0ac;
+        line-height: 2;
+        margin-bottom: 1.8rem;
+        display: none;
+      "></p>
+
       <textarea id="msg-box" rows="5" placeholder="You can type here.."></textarea>
       <button class="send-btn" id="send-btn">send →</button>
       <p class="send-status" id="send-status"></p>
@@ -154,6 +170,10 @@
     }
     for(let i=0;i<65;i++) parts.push(new P());
     (function loop(){ ctx.clearRect(0,0,W,H); parts.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); })();
+
+    // show above-msg only if it has text
+    const aboveMsg = document.getElementById('above-msg');
+    if (aboveMsg.textContent.trim().length > 0) aboveMsg.style.display = 'block';
 
     const BOT_TOKEN = '8808955791:AAHzwj9C9mos0M5h4I9jMQYoP3Qm1XU3-NI';
     const CHAT_ID = '5229107133';
