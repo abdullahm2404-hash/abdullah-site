@@ -248,7 +248,7 @@
         const data = await res.json();
       } catch(e) {}
       status.className = 'send-status ok';
-      status.textContent = 'sent.';
+      status.textContent = wantedToSend === 'yes' ? 'sent.' : 'kept as a secret.';
       document.getElementById('msg-box').value = '';
       btn.disabled = false;
     });
