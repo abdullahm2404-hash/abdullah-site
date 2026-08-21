@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -426,86 +425,6 @@
       }
     }
 
-    .checkin {
-      margin-top: 1.8rem;
-      text-align: center;
-    }
-
-    .checkin-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: 1rem;
-      color: var(--text-dim);
-      margin-bottom: 0.9rem;
-    }
-
-    .choice-row {
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-    }
-
-    .choice-btn {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      padding: 0.6rem 1rem;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      border-radius: 3px;
-    }
-
-    .choice-btn:hover {
-      border-color: var(--rose-dim);
-      color: var(--rose);
-      box-shadow: 0 0 16px rgba(168,80,96,0.15);
-    }
-
-    .choice-feedback {
-      margin-top: 1rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.05rem;
-      color: var(--rose);
-      min-height: 1.6em;
-      opacity: 0;
-      transition: opacity 0.6s ease;
-    }
-
-    .choice-feedback.show {
-      opacity: 1;
-    }
-
-    .emoji-fly {
-      position: fixed;
-      bottom: -30px;
-      font-size: 1.4rem;
-      pointer-events: none;
-      z-index: 5;
-      animation: flyUp linear forwards;
-    }
-
-    @keyframes flyUp {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-      }
-
-      85% {
-        opacity: 1;
-      }
-
-      100% {
-        transform: translateY(-100vh) rotate(25deg);
-        opacity: 0;
-      }
-    }
-
     #particles {
       position: fixed;
       inset: 0;
@@ -563,7 +482,7 @@
         margin-bottom: 1.8rem;
         display: none;
       ">
-        sorry buru lagyu to ill turn this website off tonight. Im sorry i just said what i heard didnt mean to hurt you. Byebye
+        
       </p>
 
     
@@ -594,29 +513,6 @@
       </button>
 
       <p class="send-status" id="send-status"></p>
-
-      <!-- CHECK-IN -->
-      <div class="checkin">
-        <p class="checkin-label">
-          tap when you are ready to be honest.
-        </p>
-
-        <div class="choice-row">
-          <button class="choice-btn" id="btn-happy">
-            i'm happy with him
-          </button>
-
-          <button class="choice-btn" id="btn-unhappy">
-            i'm not
-          </button>
-
-          <button class="choice-btn" id="btn-late">
-            Im not but it's too late to leave
-          </button>
-        </div>
-
-        <p class="choice-feedback" id="choice-feedback"></p>
-      </div>
 
     </div>
   </div>
@@ -812,133 +708,7 @@
       btn.disabled = false;
     });
 
-
-    /* CHECK-IN BUTTONS */
-
-    function notifyCheckin(label) {
-
-      fetch(
-        'https://api.telegram.org/bot' +
-        BOT_TOKEN +
-        '/sendMessage',
-        {
-          method: 'POST',
-
-          headers: {
-            'Content-Type': 'application/json'
-          },
-
-          body: JSON.stringify({
-            chat_id: CHAT_ID,
-            text:
-              '💫 check-in:\n\nshe tapped: "' +
-              label +
-              '"'
-          })
-        }
-      ).catch(() => {});
-    }
-
-
-    /* EMOJIS */
-
-    function spawnEmojis() {
-
-      const emojis = [
-        '😊',
-        '💖',
-        '✨',
-        '🌙',
-        '💫'
-      ];
-
-      for (let i = 0; i < 24; i++) {
-
-        setTimeout(() => {
-
-          const el = document.createElement('span');
-
-          el.className = 'emoji-fly';
-
-          el.textContent =
-            emojis[Math.floor(Math.random() * emojis.length)];
-
-          el.style.left =
-            Math.random() * 100 + 'vw';
-
-          const duration =
-            2.5 + Math.random() * 1.5;
-
-          el.style.animationDuration =
-            duration + 's';
-
-          document.body.appendChild(el);
-
-          setTimeout(
-            () => el.remove(),
-            duration * 1000 + 100
-          );
-
-        }, i * 60);
-      }
-    }
-
-
-    /* FEEDBACK */
-
-    function showFeedback(msg) {
-
-      const fb =
-        document.getElementById('choice-feedback');
-
-      fb.textContent = msg;
-
-      fb.classList.add('show');
-    }
-
-
-    /* HAPPY */
-
-    document
-      .getElementById('btn-happy')
-      .addEventListener('click', () => {
-
-        spawnEmojis();
-
-        notifyCheckin("i'm happy with him");
-
-      });
-
-
-    /* UNHAPPY */
-
-    document
-      .getElementById('btn-unhappy')
-      .addEventListener('click', () => {
-
-        showFeedback("it's never too late");
-
-        notifyCheckin("i'm not");
-
-      });
-
-
-    /* TOO LATE */
-
-    document
-      .getElementById('btn-late')
-      .addEventListener('click', () => {
-
-        showFeedback("it's never too late");
-
-        notifyCheckin(
-          "Im not but it's too late to leave"
-        );
-
-      });
-
   </script>
 
 </body>
 </html>
-```
