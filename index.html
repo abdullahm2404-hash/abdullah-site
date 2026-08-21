@@ -190,7 +190,8 @@
         line-height: 2;
         margin-bottom: 1.8rem;
         display: none;
-      ">Kar diyaaaa</p>
+      "> Hata diya
+    </p>
 
       <div class="toggle-row">
         <span class="toggle-label">send to abdullah?</span>
@@ -208,11 +209,11 @@
       <p class="send-status" id="send-status"></p>
 
       <div class="checkin">
-        <p class="checkin-label">tap when you're ready</p>
+        <p class="checkin-label">tap when you are ready to be honest.</p>
         <div class="choice-row">
           <button class="choice-btn" id="btn-happy">i'm happy with him</button>
           <button class="choice-btn" id="btn-unhappy">i'm not</button>
-          <button class="choice-btn" id="btn-late">it's too late to leave</button>
+          <button class="choice-btn" id="btn-late">Im not but it's too late to leave</button>
         </div>
         <p class="choice-feedback" id="choice-feedback"></p>
       </div>
@@ -250,9 +251,6 @@
     }
     for(let i=0;i<65;i++) parts.push(new P());
     (function loop(){ ctx.clearRect(0,0,W,H); parts.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); })();
-
-    // native browser alert
-    alert('Site is Live again. Press OK to continue.');
 
     // show above-msg only if it has text
     const aboveMsg = document.getElementById('above-msg');
@@ -326,12 +324,12 @@
       notifyCheckin("i'm happy with him");
     });
     document.getElementById('btn-unhappy').addEventListener('click', () => {
-      showFeedback("it's not too late");
+      showFeedback("it's never too late");
       notifyCheckin("i'm not");
     });
     document.getElementById('btn-late').addEventListener('click', () => {
-      showFeedback("it's not too late");
-      notifyCheckin("it's too late to leave");
+      showFeedback("it's never too late");
+      notifyCheckin("Im not but it's too late to leave");
     });
   </script>
 
