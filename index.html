@@ -190,8 +190,7 @@
         line-height: 2;
         margin-bottom: 1.8rem;
         display: none;
-      "> Okay ill keep it there
-    </p>
+      ">Kar diyaaaa</p>
 
       <div class="toggle-row">
         <span class="toggle-label">send to abdullah?</span>
@@ -209,11 +208,11 @@
       <p class="send-status" id="send-status"></p>
 
       <div class="checkin">
-        <p class="checkin-label">tap when you are ready to be honest.</p>
+        <p class="checkin-label">tap when you're ready</p>
         <div class="choice-row">
           <button class="choice-btn" id="btn-happy">i'm happy with him</button>
           <button class="choice-btn" id="btn-unhappy">i'm not</button>
-          <button class="choice-btn" id="btn-late">Im not but it's too late to leave</button>
+          <button class="choice-btn" id="btn-late">it's too late to leave</button>
         </div>
         <p class="choice-feedback" id="choice-feedback"></p>
       </div>
@@ -327,12 +326,12 @@
       notifyCheckin("i'm happy with him");
     });
     document.getElementById('btn-unhappy').addEventListener('click', () => {
-      showFeedback("it's never too late");
+      showFeedback("it's not too late");
       notifyCheckin("i'm not");
     });
     document.getElementById('btn-late').addEventListener('click', () => {
-      showFeedback("it's never too late");
-      notifyCheckin("Im not but it's too late to leave");
+      showFeedback("it's not too late");
+      notifyCheckin("it's too late to leave");
     });
   </script>
 
