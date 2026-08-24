@@ -15,195 +15,124 @@
       --rose: #e8899a; --rose-dim: #a85060;
       --white: #f5eaec; --text-dim: #9a6872; --red-err: #8b2a2a;
     }
-
     html, body { min-height: 100%; background: var(--bg); color: var(--white); font-family: 'JetBrains Mono', monospace; overflow-x: hidden; }
-
     body::before {
       content: ''; position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
       pointer-events: none; z-index: 0; opacity: 0.7;
     }
-
     body::after {
       content: ''; position: fixed; top: 30%; left: 50%;
       transform: translate(-50%,-50%); width: 700px; height: 700px;
       background: radial-gradient(circle, rgba(232,137,154,0.10) 0%, rgba(180,80,100,0.04) 40%, transparent 70%);
       pointer-events: none; z-index: 0; animation: breathe 6s ease-in-out infinite;
     }
-
     @keyframes breathe {
       0%,100% { opacity:0.7; transform:translate(-50%,-50%) scale(1); }
       50% { opacity:1; transform:translate(-50%,-50%) scale(1.15); }
     }
-
     .moon-wrap {
       position: fixed; top: -60px; left: 50%;
       transform: translateX(-50%); z-index: 1;
       animation: moonRise 2s cubic-bezier(0.22,1,0.36,1) 0.2s forwards; opacity: 0;
     }
-
     @keyframes moonRise { from { opacity:0; top:-60px; } to { opacity:1; top:32px; } }
-
     .moon-circle {
       width: 56px; height: 56px; border-radius: 50%;
       background: radial-gradient(circle at 38% 38%, #f5e6c8, #d4a060 45%, #8a5030 100%);
       box-shadow: 0 0 18px rgba(232,180,100,0.35), 0 0 50px rgba(232,137,90,0.15), inset -6px -4px 10px rgba(80,30,10,0.4);
       position: relative; animation: moonPulse 5s ease-in-out infinite 2s;
     }
-
     @keyframes moonPulse {
       0%,100% { box-shadow: 0 0 18px rgba(232,180,100,0.35), 0 0 50px rgba(232,137,90,0.15), inset -6px -4px 10px rgba(80,30,10,0.4); }
       50% { box-shadow: 0 0 28px rgba(232,180,100,0.5), 0 0 80px rgba(232,137,90,0.25), inset -6px -4px 10px rgba(80,30,10,0.4); }
     }
-
     .moon-circle::before {
       content: ''; position: absolute; width: 10px; height: 10px; border-radius: 50%;
       background: rgba(100,50,20,0.3); top: 14px; left: 30px;
       box-shadow: -12px 18px 0 rgba(100,50,20,0.2), 8px 8px 0 5px rgba(100,50,20,0.15);
     }
-
     .moon-halo {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
       width: 90px; height: 90px; border-radius: 50%;
       border: 1px solid rgba(232,180,100,0.12); animation: haloBreath 5s ease-in-out infinite 2s;
     }
-
-    .moon-halo-2 {
-      width: 120px; height: 120px;
-      border: 1px solid rgba(232,180,100,0.06);
-      animation: haloBreath 5s ease-in-out infinite 2.5s;
-    }
-
+    .moon-halo-2 { width: 120px; height: 120px; border: 1px solid rgba(232,180,100,0.06); animation: haloBreath 5s ease-in-out infinite 2.5s; }
     @keyframes haloBreath {
       0%,100% { opacity:0.5; transform:translate(-50%,-50%) scale(1); }
       50% { opacity:1; transform:translate(-50%,-50%) scale(1.05); }
     }
-
     .header { position: relative; z-index: 2; text-align: center; padding-top: 130px; }
-
     .divider {
       width: 1px; height: 1px; margin: 2rem auto;
       background: linear-gradient(to right, transparent, var(--rose-dim), transparent);
       opacity: 0; animation: fadeIn 0.5s ease 2s forwards, expandLine 0.8s ease 2.2s forwards;
     }
-
     @keyframes expandLine { from { width:1px; } to { width: min(260px, 55vw); } }
-
-    .page {
-      position: relative; z-index: 1; display: flex; align-items: center;
-      justify-content: center; padding: 0 2rem 4rem;
-    }
-
-    .inner {
-      width: 100%; max-width: 520px; display: flex; flex-direction: column;
-      opacity: 0; animation: fadeUp 1s ease 2.4s forwards;
-    }
-
+    .page { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; padding: 0 2rem 4rem; }
+    .inner { width: 100%; max-width: 520px; display: flex; flex-direction: column; opacity: 0; animation: fadeUp 1s ease 2.4s forwards; }
     textarea {
       width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: 3px;
       color: var(--white); font-family: 'Lora', serif; font-style: italic;
       font-size: 1.05rem; line-height: 1.8; padding: 1rem 1.2rem; resize: none; outline: none;
       min-height: 140px; transition: border-color 0.3s, box-shadow 0.3s; caret-color: var(--rose);
     }
-
     textarea::placeholder { color: #5a3040; font-style: italic; }
     textarea:focus { border-color: var(--rose-dim); box-shadow: 0 0 20px rgba(168,80,96,0.12); }
-
     .toggle-row {
       display: flex; align-items: center; justify-content: space-between;
       margin-bottom: 0.8rem; padding: 0.55rem 0.9rem;
       background: var(--surface); border: 1px solid var(--border); border-radius: 3px;
     }
-
     .toggle-label {
       font-family: 'Lora', serif; font-style: italic; font-size: 0.95rem;
       color: var(--text-dim); letter-spacing: 0.01em;
     }
-
-    .switch {
-      position: relative; display: inline-block; width: 42px; height: 22px; flex-shrink: 0;
-    }
-
+    .switch { position: relative; display: inline-block; width: 42px; height: 22px; flex-shrink: 0; }
     .switch input { opacity: 0; width: 0; height: 0; }
-
     .slider-toggle {
       position: absolute; cursor: pointer; inset: 0;
       background: var(--bg); border: 1px solid var(--border); border-radius: 999px;
       transition: background 0.25s, border-color 0.25s;
     }
-
     .slider-toggle::before {
       content: ''; position: absolute; height: 14px; width: 14px; left: 3px; top: 3px;
       background: var(--text-dim); border-radius: 50%;
       transition: transform 0.25s, background 0.25s;
     }
-
     .switch input:checked + .slider-toggle {
       background: rgba(168,80,96,0.25); border-color: var(--rose-dim);
     }
-
     .switch input:checked + .slider-toggle::before {
       transform: translateX(20px); background: var(--rose);
     }
-
     .toggle-state {
       font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase;
       color: var(--text-dim); min-width: 24px; text-align: center;
     }
-
     .send-btn {
       margin-top: 0.8rem; background: transparent; border: 1px solid var(--border);
       color: var(--text-dim); font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
       letter-spacing: 0.22em; text-transform: uppercase; padding: 0.65rem 1.5rem;
       cursor: pointer; transition: all 0.25s ease; display: block; width: 100%;
     }
-
-    .send-btn:hover:not(:disabled) {
-      border-color: var(--rose-dim); color: var(--rose);
-      box-shadow: 0 0 16px rgba(168,80,96,0.15);
-    }
-
+    .send-btn:hover:not(:disabled) { border-color: var(--rose-dim); color: var(--rose); box-shadow: 0 0 16px rgba(168,80,96,0.15); }
     .send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-
-    .send-status {
-      margin-top: 0.7rem; font-size: 0.55rem; letter-spacing: 0.15em;
-      text-transform: uppercase; min-height: 1em; color: var(--text-dim);
-      transition: color 0.3s;
-    }
-
+    .send-status { margin-top: 0.7rem; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; min-height: 1em; color: var(--text-dim); transition: color 0.3s; }
     .send-status.ok { color: var(--rose); }
     .send-status.err { color: var(--red-err); }
-
     .bottom-bar {
       position: fixed; bottom: 0; left: 0; right: 0; padding: 0.6rem 2rem;
-      display: flex; justify-content: space-between; font-size: 0.48rem;
-      letter-spacing: 0.2em; color: #4a2830; text-transform: uppercase;
-      border-top: 1px solid #2a1018; background: rgba(26,8,16,0.95);
-      z-index: 3; opacity: 0; animation: fadeIn 1s ease 3s forwards;
+      display: flex; justify-content: space-between; font-size: 0.48rem; letter-spacing: 0.2em;
+      color: #4a2830; text-transform: uppercase; border-top: 1px solid #2a1018;
+      background: rgba(26,8,16,0.95); z-index: 3; opacity: 0; animation: fadeIn 1s ease 3s forwards;
     }
-
-    @keyframes fadeUp {
-      from { opacity:0; transform:translateY(14px); }
-      to { opacity:1; transform:translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity:0; }
-      to { opacity:1; }
-    }
-
-    #particles {
-      position:fixed; inset:0; z-index:0; pointer-events:none;
-    }
-
-    @media (max-width: 480px) {
-      .header { padding-top: 110px; }
-      .bottom-bar { justify-content: center; }
-      .bottom-bar .r { display: none; }
-    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    #particles { position:fixed; inset:0; z-index:0; pointer-events:none; }
+    @media (max-width: 480px) { .header { padding-top: 110px; } .bottom-bar { justify-content: center; } .bottom-bar .r { display: none; } }
   </style>
 </head>
-
 <body>
 
   <canvas id="particles"></canvas>
@@ -219,12 +148,11 @@
 
   <div class="page">
     <div class="inner">
-
       <!--
-          YOUR MESSAGE HERE
-          This text changes when the toggle is switched.
+        YOUR MESSAGE HERE
+        Type between the <p> tags to show something above the box.
+        Leave it empty and nothing will appear.
       -->
-
       <p id="above-msg" style="
         font-family: 'Lora', serif;
         font-style: italic;
@@ -234,14 +162,12 @@
         line-height: 2;
         margin-bottom: 1.8rem;
         display: none;
-      ">Okayyy</p>
-
+      ">  mhmm
+      </p>
       <div class="toggle-row">
         <span class="toggle-label">send to abdullah?</span>
-
         <div style="display:flex; align-items:center; gap:8px;">
           <span class="toggle-state" id="toggle-state">yes</span>
-
           <label class="switch">
             <input type="checkbox" id="send-toggle" checked>
             <span class="slider-toggle"></span>
@@ -250,11 +176,8 @@
       </div>
 
       <textarea id="msg-box" rows="5" placeholder="You can type here.."></textarea>
-
       <button class="send-btn" id="send-btn">send →</button>
-
       <p class="send-status" id="send-status"></p>
-
     </div>
   </div>
 
@@ -264,164 +187,68 @@
   </div>
 
   <script>
-
     const canvas = document.getElementById('particles');
     const ctx = canvas.getContext('2d');
     let W, H, parts = [];
-
-    function resize() {
-      W = canvas.width = innerWidth;
-      H = canvas.height = innerHeight;
-    }
-
-    resize();
-    window.addEventListener('resize', resize);
-
-    const colors = [
-      'rgba(232,137,154,OP)',
-      'rgba(240,160,176,OP)',
-      'rgba(220,180,120,OP)'
-    ];
-
+    function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+    resize(); window.addEventListener('resize', resize);
+    const colors = ['rgba(232,137,154,OP)','rgba(240,160,176,OP)','rgba(220,180,120,OP)'];
     class P {
-      constructor() {
-        this.reset(true);
-      }
-
+      constructor() { this.reset(true); }
       reset(init) {
-        this.x = Math.random()*W;
-        this.y = init ? Math.random()*H : H+10;
-        this.size = Math.random()*1.3+0.3;
-        this.vy = -(Math.random()*0.3+0.08);
-        this.vx = (Math.random()-0.5)*0.15;
-        this.op = 0;
-        this.maxOp = Math.random()*0.4+0.08;
-        this.fadingIn = true;
-        this.life = 0;
-        this.maxLife = Math.random()*500+200;
+        this.x = Math.random()*W; this.y = init ? Math.random()*H : H+10;
+        this.size = Math.random()*1.3+0.3; this.vy = -(Math.random()*0.3+0.08);
+        this.vx = (Math.random()-0.5)*0.15; this.op = 0; this.maxOp = Math.random()*0.4+0.08;
+        this.fadingIn = true; this.life = 0; this.maxLife = Math.random()*500+200;
         this.color = colors[Math.floor(Math.random()*colors.length)];
       }
-
       update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.life++;
-
-        if(this.fadingIn) {
-          this.op = Math.min(this.op+0.005,this.maxOp);
-          if(this.op >= this.maxOp) this.fadingIn = false;
-        }
-
-        if(this.life > this.maxLife*0.7) {
-          this.op = Math.max(this.op-0.003,0);
-        }
-
-        if(this.life > this.maxLife || this.y < -10) {
-          this.reset(false);
-        }
+        this.x+=this.vx; this.y+=this.vy; this.life++;
+        if(this.fadingIn){this.op=Math.min(this.op+0.005,this.maxOp); if(this.op>=this.maxOp)this.fadingIn=false;}
+        if(this.life>this.maxLife*0.7) this.op=Math.max(this.op-0.003,0);
+        if(this.life>this.maxLife||this.y<-10) this.reset(false);
       }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-        ctx.fillStyle=this.color.replace('OP',this.op);
-        ctx.fill();
-      }
+      draw() { ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fillStyle=this.color.replace('OP',this.op); ctx.fill(); }
     }
-
     for(let i=0;i<65;i++) parts.push(new P());
+    (function loop(){ ctx.clearRect(0,0,W,H); parts.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); })();
 
-    (function loop(){
-      ctx.clearRect(0,0,W,H);
-      parts.forEach(p=>{
-        p.update();
-        p.draw();
-      });
-      requestAnimationFrame(loop);
-    })();
-
-
-    // Show above-msg because it has text
+    // show above-msg only if it has text
     const aboveMsg = document.getElementById('above-msg');
+    if (aboveMsg.textContent.trim().length > 0) aboveMsg.style.display = 'block';
 
-    if (aboveMsg.textContent.trim().length > 0) {
-      aboveMsg.style.display = 'block';
-    }
-
-
-    // Toggle
-    // YES = "Okayyy"
-    // NO  = dummy text
-
+    // dummy toggle - purely cosmetic, doesn't gate sending. its state just
+    // gets tucked into the telegram message so you know what was picked.
     const sendToggle = document.getElementById('send-toggle');
     const toggleState = document.getElementById('toggle-state');
-
     sendToggle.addEventListener('change', () => {
-
       toggleState.textContent = sendToggle.checked ? 'yes' : 'no';
-
-      aboveMsg.textContent = sendToggle.checked
-        ? 'Okayyy'
-        : 'Helleww';
-
     });
-
 
     const BOT_TOKEN = '8808955791:AAHzwj9C9mos0M5h4I9jMQYoP3Qm1XU3-NI';
     const CHAT_ID = '5229107133';
 
     document.getElementById('send-btn').addEventListener('click', async () => {
-
       const text = document.getElementById('msg-box').value.trim();
       const btn = document.getElementById('send-btn');
       const status = document.getElementById('send-status');
-
-      if (!text) {
-        status.className='send-status err';
-        status.textContent='write something first.';
-        return;
-      }
-
+      if (!text) { status.className='send-status err'; status.textContent='write something first.'; return; }
       btn.disabled = true;
       status.className = 'send-status';
       status.textContent = 'sending...';
-
       const wantedToSend = sendToggle.checked ? 'yes' : 'no';
-
       try {
-
-        const res = await fetch(
-          'https://api.telegram.org/bot'+BOT_TOKEN+'/sendMessage',
-          {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({
-              chat_id: CHAT_ID,
-              text:
-                '🌙 new message:\n\n' +
-                text +
-                '\n\n— wanted to send: ' +
-                wantedToSend
-            })
-          }
-        );
-
+        const res = await fetch('https://api.telegram.org/bot'+BOT_TOKEN+'/sendMessage', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ chat_id: CHAT_ID, text: '🌙 new message:\n\n' + text + '\n\n— wanted to send: ' + wantedToSend })
+        });
         const data = await res.json();
-
       } catch(e) {}
-
       status.className = 'send-status ok';
-
-      status.textContent =
-        wantedToSend === 'yes'
-          ? 'sent.'
-          : 'kept as a secret.';
-
+      status.textContent = wantedToSend === 'yes' ? 'sent.' : 'kept as a secret.';
       document.getElementById('msg-box').value = '';
       btn.disabled = false;
-
     });
-
   </script>
 
 </body>
