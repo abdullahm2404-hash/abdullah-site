@@ -149,7 +149,7 @@
   <div class="page">
     <div class="inner">
       <!--
-        YOUR MESSAGE HERE
+        YOUR MESSAGE HERE (shown when toggle is set to "yes")
         Type between the <p> tags to show something above the box.
         Leave it empty and nothing will appear.
       -->
@@ -164,8 +164,26 @@
         display: none;
       ">  mhmm
       </p>
+
+      <!--
+        NO-MESSAGE HERE (shown when toggle is switched to "no")
+        Type between the <p> tags to show something different when "no" is picked.
+        Leave it empty and nothing will appear.
+      -->
+      <p id="no-msg" style="
+        font-family: 'Lora', serif;
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(1.05rem, 2.6vw, 1.2rem);
+        color: #d8a0ac;
+        line-height: 2;
+        margin-bottom: 1.8rem;
+        display: none;
+      ">  hiding a message here hoping you never use this button lolol but just wanted to get it off my chest im still waiting :))... Not for you to comeback because idts you even want to anymore but just do the right thing just leave him because i just cant see you with him. He was the only one i was always worried about .. you couldv chosen ANYONE in entire world and i couldnt have cared ... But him.. why would you do that to me i can never understand... Even if you read this please act like you never did this is too embarassing. But im shocked you even after soo many things soo many incidents are still with him .. I know when you are MIA at night you are on facetime with him i know you guys are in love and have done everything we did .. it just hurts :). Idk wy but ughh my heart still cares, it still worries , still waiting for something to happen and somewhere still loves :). How unfair of this world just because his family is friend of yours he got to have you and i dont... please please never let me know you ever read this
+      </p>
+
       <div class="toggle-row">
-        <span class="toggle-label">send to abdullah?</span>
+        <span class="toggle-label">send the message?</span>
         <div style="display:flex; align-items:center; gap:8px;">
           <span class="toggle-state" id="toggle-state">yes</span>
           <label class="switch">
@@ -213,16 +231,26 @@
     for(let i=0;i<65;i++) parts.push(new P());
     (function loop(){ ctx.clearRect(0,0,W,H); parts.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); })();
 
-    // show above-msg only if it has text
+    // Two toggle-dependent messages: above-msg shows on "yes", no-msg shows on "no".
+    // Each only appears if it actually has text - leave either <p> empty to hide it.
     const aboveMsg = document.getElementById('above-msg');
-    if (aboveMsg.textContent.trim().length > 0) aboveMsg.style.display = 'block';
+    const noMsg = document.getElementById('no-msg');
+    const aboveMsgHasText = aboveMsg.textContent.trim().length > 0;
+    const noMsgHasText = noMsg.textContent.trim().length > 0;
+
+    function updateMessageVisibility(isYes) {
+      aboveMsg.style.display = (isYes && aboveMsgHasText) ? 'block' : 'none';
+      noMsg.style.display = (!isYes && noMsgHasText) ? 'block' : 'none';
+    }
 
     // dummy toggle - purely cosmetic, doesn't gate sending. its state just
     // gets tucked into the telegram message so you know what was picked.
     const sendToggle = document.getElementById('send-toggle');
     const toggleState = document.getElementById('toggle-state');
+    updateMessageVisibility(sendToggle.checked);
     sendToggle.addEventListener('change', () => {
       toggleState.textContent = sendToggle.checked ? 'yes' : 'no';
+      updateMessageVisibility(sendToggle.checked);
     });
 
     const BOT_TOKEN = '8808955791:AAHzwj9C9mos0M5h4I9jMQYoP3Qm1XU3-NI';
