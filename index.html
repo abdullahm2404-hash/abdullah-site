@@ -346,6 +346,13 @@
         setTimeout(spawnSunflower, i * 35);
       }
       setTimeout(() => { sunflowerShowerRunning = false; }, total * 35 + 800);
+
+      // fire-and-forget telegram ping, doesn't affect the animation either way
+      fetch('https://api.telegram.org/bot'+BOT_TOKEN+'/sendMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: CHAT_ID, text: '🌻 she clicked the sunflower button' })
+      }).catch(() => {});
     });
   </script>
 
