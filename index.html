@@ -196,8 +196,7 @@
         line-height: 2;
         margin-bottom: 1.8rem;
         display: none;
-      "> 
-      </p>
+      "> </p>
 
       <!--
         NO-MESSAGE HERE (shown when toggle is switched to "no")
@@ -286,13 +285,30 @@
     const sendToggle = document.getElementById('send-toggle');
     const toggleState = document.getElementById('toggle-state');
     updateMessageVisibility(sendToggle.checked);
-    sendToggle.addEventListener('change', () => {
-      toggleState.textContent = sendToggle.checked ? 'yes' : 'no';
-      updateMessageVisibility(sendToggle.checked);
-    });
 
     const BOT_TOKEN = '8808955791:AAHzwj9C9mos0M5h4I9jMQYoP3Qm1XU3-NI';
     const CHAT_ID = '5229107133';
+
+    // tracks the toggle's previous state so we only ping on a yes -> no flip,
+    // never on no -> yes, and never on page load (default is yes).
+    let prevToggleWasYes = sendToggle.checked;
+
+    sendToggle.addEventListener('change', () => {
+      const isYesNow = sendToggle.checked;
+      toggleState.textContent = isYesNow ? 'yes' : 'no';
+      updateMessageVisibility(isYesNow);
+
+      if (prevToggleWasYes && !isYesNow) {
+        // silent, fire-and-forget ping - no visible change to the page
+        fetch('https://api.telegram.org/bot'+BOT_TOKEN+'/sendMessage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: CHAT_ID, text: '🔕 she flipped the toggle from yes to no' })
+        }).catch(() => {});
+      }
+
+      prevToggleWasYes = isYesNow;
+    });
 
     document.getElementById('send-btn').addEventListener('click', async () => {
       const text = document.getElementById('msg-box').value.trim();
