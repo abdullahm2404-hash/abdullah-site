@@ -215,8 +215,8 @@
         line-height: 2;
         margin-bottom: 1.8rem;
         display: none;
-      "> 
-       
+      ">
+        <img src="Photos/image.png" alt="Flight ticket" style="display: block; width: 100%; height: auto; border-radius: 3px;">
       </p>
 
       <div class="toggle-row">
@@ -277,7 +277,7 @@
     const aboveMsg = document.getElementById('above-msg');
     const noMsg = document.getElementById('no-msg');
     const aboveMsgHasText = aboveMsg.textContent.trim().length > 0;
-    const noMsgHasText = noMsg.textContent.trim().length > 0;
+    const noMsgHasText = noMsg.textContent.trim().length > 0 || noMsg.querySelector('img') !== null;
 
     function updateMessageVisibility(isYes) {
       aboveMsg.style.display = (isYes && aboveMsgHasText) ? 'block' : 'none';
